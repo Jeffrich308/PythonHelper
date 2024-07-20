@@ -37,7 +37,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="Home">
      <attribute name="title">
@@ -51,6 +51,11 @@
         <width>691</width>
         <height>541</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
      </widget>
      <widget class="QLabel" name="lblHomePage">
@@ -126,7 +131,7 @@
       <property name="geometry">
        <rect>
         <x>200</x>
-        <y>510</y>
+        <y>460</y>
         <width>31</width>
         <height>31</height>
        </rect>
@@ -150,7 +155,7 @@
       <property name="geometry">
        <rect>
         <x>160</x>
-        <y>510</y>
+        <y>460</y>
         <width>31</width>
         <height>31</height>
        </rect>
@@ -177,7 +182,7 @@
       <property name="geometry">
        <rect>
         <x>240</x>
-        <y>510</y>
+        <y>460</y>
         <width>31</width>
         <height>31</height>
        </rect>
@@ -198,6 +203,19 @@
       </property>
       <property name="autoRepeat">
        <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnEditRecord">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>500</y>
+        <width>111</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Edit Record</string>
       </property>
      </widget>
     </widget>
@@ -234,6 +252,11 @@
         <width>691</width>
         <height>541</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
      </widget>
      <widget class="QLineEdit" name="txtSearchKeyWords">
@@ -424,6 +447,120 @@
         <width>691</width>
         <height>541</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="Edit">
+     <attribute name="title">
+      <string>Edit</string>
+     </attribute>
+     <widget class="QLabel" name="lblEditPage">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>381</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Edit Entry</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QTextEdit" name="txtEdit">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>0</y>
+        <width>691</width>
+        <height>541</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="txtEditMethod">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>60</y>
+        <width>391</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="placeholderText">
+       <string>Edit Method Name</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="txtEditKeyWords">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>110</y>
+        <width>391</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="placeholderText">
+       <string>Edit Key words</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnUpdateRecord">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>510</y>
+        <width>93</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Update Record</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnCancelEdit">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>510</y>
+        <width>93</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Cancel</string>
       </property>
      </widget>
     </widget>

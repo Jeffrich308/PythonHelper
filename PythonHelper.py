@@ -57,6 +57,9 @@ class UI(QMainWindow):
         self.btnIndexBack = self.findChild(QPushButton, "btnIndexBack")
         self.btnSaveRecord = self.findChild(QPushButton, "btnSaveRecord")
         self.btnGo = self.findChild(QPushButton, "btnGo")
+        self.btnEditRecord = self.findChild(QPushButton, "btnEditRecord")
+        self.btnCancelEdit = self.findChild(QPushButton, "btnCancelEdit")
+        self.btnUpdateRecord = self.findChild(QPushButton, "btnUpdateRecord")
 
         self.txtKeyWords = self.findChild(QLineEdit, "txtKeyWords")
         self.txtMethod = self.findChild(QLineEdit, "txtMethod")
@@ -67,6 +70,9 @@ class UI(QMainWindow):
         self.pteResults = self.findChild(QPlainTextEdit, "pteResults")
         self.pteSearchResults = self.findChild(QPlainTextEdit, "pteSearchResults")
         self.txtInput = self.findChild(QTextEdit, "txtInput")
+        self.txtEditMethod = self.findChild(QLineEdit, "txtEditMethod")
+        self.txtEditKeyWords = self.findChild(QLineEdit, "txtEditKeyWords")
+        self.txtEdit = self.findChild(QTextEdit, "txtEdit")
 
         self.lblKeyWords = self.findChild(QLabel, "lblKeyWords")
         self.lblMethod = self.findChild(QLabel, "lblMethod")
@@ -80,8 +86,13 @@ class UI(QMainWindow):
         self.btnIndexBack.clicked.connect(self.index_back)
         self.btnSaveRecord.clicked.connect(self.write_to_dB)
         self.btnGo.clicked.connect(self.go_search)
-        
+        self.btnEditRecord.clicked.connect(self.record_to_edit)
+        self.btnCancelEdit.clicked.connect(self.cancel_edit)
+        self.btnEditRecord.clicked.connect(self.edit_record)
+        self.btnUpdateRecord.clicked.connect(self.write_record)
+
         self.txtSearchMethod.returnPressed.connect(self.search_method_name)
+        self.txtSearchIndex.returnPressed.connect(self.go_search)
 
         self.actExit.triggered.connect(self.closeEvent)
 
@@ -89,6 +100,7 @@ class UI(QMainWindow):
         self.show()
 
         self.get_random_index()
+        self.tab.setTabVisible(3, False)  # Makes Tab invisible
 
         # Show Home tab at startup
         self.tab.setCurrentIndex(0)
@@ -116,35 +128,36 @@ class UI(QMainWindow):
         self.txtMethod.clear()
         self.txtKeyWords.clear()
         self.txtInput.clear()
-    
+        self.current_index = get_db_length(self)
+        self.lblCurrentIndex.setText(str(self.current_index))
+
     def index_forward(self):
-        print("Record will index forward one record")
+        # print("Record will index forward one record")
         eDb = get_db_length(self)
         if self.current_index >= eDb:
             self.current_index == eDb
-            print("Already at the last record")
-            popup_Critical(self,"At the last Record")
+            # print("Already at the last record")
+            popup_Critical(self, "At the last Record")
         else:
             self.current_index = int(self.current_index) + 1
             self.lblCurrentIndex.setText(str(self.current_index))
-            #print(self.current_index)
+            # print(self.current_index)
             self.get_random_record()
 
     def index_back(self):
-        print("Record will index back one record")
+        # print("Record will index back one record")
         if self.current_index <= 1:  # Test to stay in range of available records
             self.current_index == 1
-            print("At the First record")
-            popup_Critical(self,"At the first Record")
+            # print("At the First record")
+            popup_Critical(self, "At the first Record")
         else:
             self.current_index = int(self.current_index) - 1
             self.lblCurrentIndex.setText(str(self.current_index))
-            #print(self.current_index)
+            # print(self.current_index)
             self.get_random_record()
 
-        
     def get_random_index(self):
-        min_value = 1 
+        min_value = 1
         max_value = get_db_length(self)
         print(max_value)
         self.current_index = random.randint(min_value, max_value)
@@ -152,39 +165,38 @@ class UI(QMainWindow):
         print(f"The Random number is {self.current_index}")
         self.get_random_record()
 
-    
     def get_random_record(self):
         self.pteResult.clear()
         print(f"The random generated current index is {self.current_index}")
         conn = sqlite3.connect("python.db")  # Open dBase
         c = conn.cursor()  # Create Cursor
-        c.execute(f"SELECT * FROM tips WHERE id ='{self.current_index}'")  
+        c.execute(f"SELECT * FROM tips WHERE id ='{self.current_index}'")
 
         rlist = c.fetchone()
 
         conn.commit()  # Save Write
         conn.close()  # Close connection
 
-        print(f"{rlist[0]}, {rlist[1]}, {rlist[2]}, {rlist[3]}")
+        # print(f"{rlist[0]}, {rlist[1]}, {rlist[2]}, {rlist[3]}")
         # Fill form with results
         self.lblMethod.setText(rlist[1])
         self.lblKeyWords.setText(rlist[2])
         self.pteResult.appendPlainText(rlist[3])
         # Update the current indes
         self.lblCurrentIndex.setText(str(self.current_index))
-        # Return to home form 
+        # Return to home form
         self.tab.setCurrentIndex(0)
 
-    
     def search_method_name(self):
         print("Searching through state names")
         self.pteSearchResults.clear()
         conn = sqlite3.connect("python.db")  # Opening dB for reading
         c = conn.cursor()
         method_name_search = self.txtSearchMethod.text()
-        
+
         c.execute(
-            "SELECT * FROM tips WHERE method_name LIKE (?) ", (method_name_search + "%",)
+            "SELECT * FROM tips WHERE method_name LIKE (?) ",
+            (method_name_search + "%",),
         )
         items = c.fetchall()
         # Close Connection
@@ -192,19 +204,69 @@ class UI(QMainWindow):
         conn.close()
 
         for item in items:
-            line = (f"{item[0]}, {item[1]}")
-            print(line)
+            line = f"{item[0]}, {item[1]}"
+            # print(line)
             self.pteSearchResults.appendPlainText(line)
-    
-        
+
+    def record_to_edit(self):
+        self.pteResult.clear()
+        print(f"The random generated current index is {self.current_index}")
+        conn = sqlite3.connect("python.db")  # Open dBase
+        c = conn.cursor()  # Create Cursor
+        c.execute(f"SELECT * FROM tips WHERE id ='{self.current_index}'")
+
+        rlist = c.fetchone()
+
+        conn.commit()  # Save Write
+        conn.close()  # Close connection
+
+        # print(f"{rlist[0]}, {rlist[1]}, {rlist[2]}, {rlist[3]}")
+        # Fill form with results
+        self.txtEditMethod.setText(rlist[1])
+        self.txtEditKeyWords.setText(rlist[2])
+        self.txtEdit.setText(rlist[3])
+        # Update the current indes
+        self.lblCurrentIndex.setText(str(self.current_index))
+        # Return to home form
+        self.tab.setCurrentIndex(3)
+
+    def cancel_edit(self):
+        self.tab.setCurrentIndex(0)
+
     def go_search(self):
         self.current_index = int(self.txtSearchIndex.text())  # Get index to display
         print(self.current_index)
         print(type(self.current_index))
         self.get_random_record()  # Display the requested record
-        self.pteSearchResults.clear() # Clearing results from previous search
+        self.pteSearchResults.clear()  # Clearing results from previous search
+        self.txtSearchIndex.clear()  # Clear box for next request
 
-    
+    def write_record(self):
+        print(f"Edit record {self.current_index}")
+        tmp = self.txtEditMethod.text()
+        conn = sqlite3.connect("python.db")  # Open dBase
+        c = conn.cursor()  # Create Cursor
+
+        c.execute(
+            "UPDATE tips SET method_name=?, keywords=?, description=? WHERE id=?",
+            (
+                self.txtEditMethod.text(),
+                self.txtEditKeyWords.text(),
+                self.txtEdit.toPlainText(),
+                self.current_index,
+            ),
+        )
+
+        # Close Connection
+        conn.commit()
+        conn.close()
+        self.tab.setCurrentIndex(0)
+        print(f"The current index is {self.current_index} after running")
+        self.get_random_record()
+
+    def edit_record(self):
+        self.tab.setCurrentIndex(3)
+
     def closeEvent(self, *args, **kwargs):
         # print("Program closed Successfully!")
         self.close()
