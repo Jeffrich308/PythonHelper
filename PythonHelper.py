@@ -219,8 +219,6 @@ class UI(QMainWindow):
         conn.commit()  # Save Write
         conn.close()  # Close connection
 
-        # print(f"{rlist[0]}, {rlist[1]}, {rlist[2]}, {rlist[3]}")
-        # Fill form with results
         self.txtEditMethod.setText(rlist[1])
         self.txtEditKeyWords.setText(rlist[2])
         self.txtEdit.setText(rlist[3])
