@@ -106,13 +106,12 @@ class UI(QMainWindow):
         self.tab.setCurrentIndex(0)
 
     def write_to_dB(self):
-        print("Ready to write to dB")
         method_name = self.txtMethod.text()
         print(method_name)
         keywords = self.txtKeyWords.text()
-        print(keywords)
+        #print(keywords)
         description = self.txtInput.toPlainText()
-        print(description)
+        #print(description)
 
         conn = sqlite3.connect("python.db")  # Open dBase
         c = conn.cursor()  # Create Cursor
@@ -261,7 +260,7 @@ class UI(QMainWindow):
         conn.commit()
         conn.close()
         self.tab.setCurrentIndex(0)
-        print(f"The current index is {self.current_index} after running")
+        #print(f"The current index is {self.current_index} after running")
         self.get_random_record()
 
     def edit_record(self):

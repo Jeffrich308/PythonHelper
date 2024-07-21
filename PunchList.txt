@@ -1,0 +1,4 @@
+Search for keywords
+
+Catch error when go button is pressed with the selection box empty
+
