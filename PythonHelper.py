@@ -222,7 +222,7 @@ class UI(QMainWindow):
         self.txtEditMethod.setText(rlist[1])
         self.txtEditKeyWords.setText(rlist[2])
         self.txtEdit.setText(rlist[3])
-        # Update the current indes
+        #  Update the current index
         self.lblCurrentIndex.setText(str(self.current_index))
         # Return to home form
         self.tab.setCurrentIndex(3)
