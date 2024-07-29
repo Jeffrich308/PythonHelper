@@ -135,7 +135,7 @@ def get_db_length(self):
 
         dB_length = len(items)
         print(f"the dB length is {dB_length}")
-        return(dB_length)
+        return(int(dB_length))
 
 
 
