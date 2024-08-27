@@ -187,7 +187,6 @@ class UI(QMainWindow):
         self.tab.setCurrentIndex(0)
 
     def search_method_name(self):
-        print("Searching through state names")
         self.pteSearchResults.clear()
         conn = sqlite3.connect("python.db")  # Opening dB for reading
         c = conn.cursor()
@@ -195,7 +194,7 @@ class UI(QMainWindow):
 
         c.execute(
             "SELECT * FROM tips WHERE method_name LIKE (?) ",
-            (method_name_search + "%",),
+            ("%" + method_name_search + "%",),
         )
         items = c.fetchall()
         # Close Connection
