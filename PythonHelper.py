@@ -1,10 +1,10 @@
 # -------------------------------------------------------------------------------
-# Name:             Generic Startup Loading a UI File
-# Purpose:          Simplify a GUI interface app
+# Name:             PythonHelper.py
+# Purpose:          Database of Python commands and examples
 #
 # Author:           Jeffreaux
 #
-# Created:          20Mar23
+# Created:          02Aug24
 #
 # Required Packages:    PyQt5, PyQt5-Tools
 # -------------------------------------------------------------------------------
